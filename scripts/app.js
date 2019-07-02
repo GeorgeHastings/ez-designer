@@ -332,13 +332,15 @@ const processes = {
     }
   },
   sapphire: () => {
-    density = 50;
-    scale = 1;
-    drawRects(4);
-    scale = 0.5;
-    drawRects(4);
-    scale = 0.25;
-    drawRects(4);
+    // density = 50;
+    let initialScale = scale;
+    drawRects(rowSize);
+    scale = initialScale * .75;
+    drawRects(rowSize);
+    scale = initialScale * .5;
+    drawRects(rowSize);
+    scale = initialScale * .25;
+    drawRects(rowSize);
   },
 }
 
