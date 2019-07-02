@@ -106,6 +106,12 @@
               <svg width="22" height="22" xmlns="http://www.w3.org/2000/svg"><path d="M1.244 1.247L6.57 11.08l-5.31 9.665 9.768-5.315 9.706 5.308-5.304-9.628 5.327-9.862-9.741 5.322-9.772-5.323z" stroke="#000" fill="none" fill-rule="evenodd"/></svg>
             </label>
           </div>
+          <div class="shape-option">
+            <input id="shapeRainbowLines" type="checkbox">
+            <label>
+              <svg width="22" height="22" xmlns="http://www.w3.org/2000/svg"><path d="M1.244 1.247L6.57 11.08l-5.31 9.665 9.768-5.315 9.706 5.308-5.304-9.628 5.327-9.862-9.741 5.322-9.772-5.323z" stroke="#000" fill="none" fill-rule="evenodd"/></svg>
+            </label>
+          </div>
         </div>
         <label>Colors</label>
         <div class="colors"></div>
@@ -117,27 +123,31 @@
         <div class="parameters">
           <div class="parameter">
             <label>Canvas width</label>
-            <input id="canvasWidthInput" type="number" value="500">
+            <input id="canvasWidthInput" type="number" min="0" value="500">
           </div>
           <div class="parameter">
             <label>Canavs height</label>
-            <input id="canvasHeightInput" type="number" value="500">
+            <input id="canvasHeightInput" type="number" min="0" value="500">
           </div>
           <div class="parameter">
             <label>Row size</label>
-            <input id="elementSizeInput" type="number" value="5">
+            <input id="elementSizeInput" type="number" min="0" value="5">
           </div>
           <div class="parameter">
             <label>Stroke width</label>
-            <input id="strokeWidthInput" type="number" max="100" value="1">
+            <input id="strokeWidthInput" type="number" min="0" value="1">
           </div>
           <div class="parameter">
             <label>Rotation angle</label>
-            <input id="rotationAngleInput" type="number" value="90">
+            <input id="rotationAngleInput" type="number" min="0" max="360" value="90">
+          </div>
+          <div class="parameter">
+            <label>Scale</label>
+            <input id="scaleInput" type="number" max="100" min="0" value="100">
           </div>
           <div class="parameter">
             <label>Density</label>
-            <input id="densityInput" type="number" max="100" value="100">
+            <input id="densityInput" type="number" max="100" min="0" value="100">
           </div>
         </div>
         <div class="processes">

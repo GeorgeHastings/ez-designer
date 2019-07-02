@@ -12,6 +12,7 @@ let canvasWidth = 500;
 let canvasHeight = 500;
 let rowSize = 5;
 let density = 100;
+let scale = 100;
 let rotationAngle = 90;
 let strokeWidth = 1;
 let fillAsGradient = false;
@@ -106,11 +107,20 @@ const gradient = colors => {
   })
 }
 
-const generateFromPath = (path, size, x, y) => {
+const generateFromPath = (path, size, x, y, stroke) => {
   const group = draw.group();
   group.size(size, size).move(x, y).scale(size/100, size/100);
   group.path(path)
-  .fill(getFill(colors));
+  if(!stroke) {
+    group.fill(getFill(colors));
+  } else {
+    group.stroke({
+      color: getRandomArrayVal(colors),
+      width: strokeWidth,
+      linecap: 'round'
+    })
+    .fill('none')
+  }
   group.transform({rotation: getRandomRotationByInterval(rotationAngle)});
   return group;
 }
@@ -212,6 +222,10 @@ const star = (size, x, y) => {
   generateFromPath("M75 50l25 50-50-25-50 25 25-50L0 0l50 25 50-25-25 50z", size, x, y)
 }
 
+const rainbowLines = (size, x, y) => {
+  generateFromPath("M50 0c0 27.61424 22.38576 50 50 50M25 0c0 41.42136 33.57864 75 75 75M0 0c0 55.22848 44.77152 100 100 100", size, x, y, true);
+}
+
 const jawn = (size, x, y) => {
   const group = draw.group();
   group.size(size, size).move(x, y).scale(size/100, size/100);
@@ -284,7 +298,8 @@ const getActiveShapes = () => {
     "shapeGrowth": growth,
     "shapeTine": tine,
     "shapeLeaf": leaf,
-    "shapeStar": star
+    "shapeStar": star,
+    "shapeRainbowLines": rainbowLines
   }
 
   Object.keys(keys).forEach(key => {
@@ -313,21 +328,35 @@ const processes = {
       const x = canvasWidth/2 - canvasWidth * (1 - i/10)/2;
       const y = canvasHeight/2 - canvasHeight * (1 - i/10)/2;
       strokeWidth = stroke * (250/size);
-      wonkyCircle(size, x, y, path, getRandomArrayVal([false, true]));
+      wonkyCircle(size, x, y, path, getRandomArrayVal([false]));
     }
-  }
+  },
+  sapphire: () => {
+    density = 50;
+    scale = 1;
+    drawRects(4);
+    scale = 0.5;
+    drawRects(4);
+    scale = 0.25;
+    drawRects(4);
+  },
 }
 
 const drawRects = (rowSize, shapes, callback) => {
-  const size = canvasWidth/rowSize;
+  let size = canvasWidth/rowSize;
   const amt = (canvasWidth / size) * (canvasHeight / size);
+  let newsize = size * scale;
+  // let offset = scale;
 
   for(let i = 0; i < amt; i++) {
-    const x = (i * size) % canvasWidth;
-    const y = Math.floor((i * size) / canvasWidth) * size;
+    let x = (i * size) % canvasWidth;
+    let y = Math.floor((i * size) / canvasWidth) * size;
+
+    x = x + size/2 - newsize/2;
+    y = y + size/2 - newsize/2;
 
     if(rollDicePct(density)) {
-      const shape = getRandomArrayVal(getActiveShapes())(size, x, y);
+      const shape = getRandomArrayVal(getActiveShapes())(newsize, x, y);
       if(callback) {
         callback(shape);
       }
@@ -372,6 +401,7 @@ const generate = () => {
   density = +$('densityInput').value;
   strokeWidth = +$('strokeWidthInput').value;
   fillAsGradient = $('fillAsGradient').checked;
+  scale = $('scaleInput').value/100;
 
   $('download').innerText = 'Copy to clipboard';
 
