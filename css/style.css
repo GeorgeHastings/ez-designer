@@ -66,7 +66,7 @@ body {
 
 label {
   color: #a5a5a5;
-  font-size: 1.4rem; }
+  font-size: 1.2rem; }
 
 .colors,
 .shapes {
@@ -120,24 +120,26 @@ label {
   stroke: #000; }
 
 .parameters {
+  display: flex;
+  flex-wrap: wrap;
   margin-bottom: 2rem; }
 
 .parameter {
   display: flex;
+  width: 50%;
   align-items: center;
   justify-content: space-between;
-  font-size: 1.4rem; }
-  .parameter + .parameter {
-    margin-top: 1rem; }
+  font-size: 1.4rem;
+  margin-top: 1rem; }
   .parameter label {
     color: #a5a5a5; }
   .parameter input {
-    height: 4rem;
-    border: 1px solid #eaeaea;
+    height: 3rem;
+    border: none;
     border-radius: 0.2rem;
     padding: 0 1rem;
     font: inherit;
-    max-width: 10rem; }
+    max-width: 6rem; }
     .parameter input:focus {
       outline: none; }
 

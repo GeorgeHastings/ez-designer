@@ -16,6 +16,7 @@ let scale = 100;
 let rotationAngle = 90;
 let strokeWidth = 1;
 let fillAsGradient = false;
+let randomlyRotate = true;
 
 const blobs = [
   "M85.799 24.614c8.41 12.401 12.501 26.359 9.815 39.01-2.686 12.627-12.2 23.949-24.651 30.45-12.451 6.477-27.84 8.134-40.014 2.51-12.175-5.647-21.137-18.55-24.928-33.21-3.815-14.686-2.46-31.103 6.05-43.53C20.606 7.395 36.321-1.09 50.504.115c14.208 1.18 26.885 12.074 35.295 24.5z",
@@ -121,7 +122,7 @@ const generateFromPath = (path, size, x, y, stroke) => {
     })
     .fill('none')
   }
-  group.transform({rotation: getRandomRotationByInterval(rotationAngle)});
+  group.transform({rotation: randomlyRotate ? getRandomRotationByInterval(rotationAngle) : rotationAngle});
   return group;
 }
 
@@ -133,14 +134,14 @@ const triangle = (size, x, y) => {
   return draw.polyline([[0,0], [0, size], [size, size], [0,0]])
   .move(x, y)
   .fill(getFill(colors))
-  .transform({rotation: getRandomRotationByInterval(rotationAngle)});
+  .transform({rotation: randomlyRotate ? getRandomRotationByInterval(rotationAngle) : rotationAngle});
 }
 
 const square = (size, x, y) => {
   return draw.rect(size, size)
   .move(x, y)
   .fill(getFill(colors))
-  .transform({rotation: getRandomRotationByInterval(rotationAngle)});
+  .transform({rotation: randomlyRotate ? getRandomRotationByInterval(rotationAngle) : rotationAngle});
 }
 
 const octagon = (size, x, y) => {
@@ -149,11 +150,11 @@ const octagon = (size, x, y) => {
   return draw.polyline([[size/2, 0], [a, b], [size, size/2], [a, a], [size/2, size], [b, a], [0, size/2], [b, b]])
   .move(x, y)
   .fill(getFill(colors))
-  .transform({rotation: getRandomRotationByInterval(rotationAngle)});
+  .transform({rotation: randomlyRotate ? getRandomRotationByInterval(rotationAngle) : rotationAngle});
 }
 
 const circle = (size, x, y) => {
-  return draw.circle(size).move(x, y).fill(getFill(colors)).transform({rotation: getRandomRotationByInterval(rotationAngle)});
+  return draw.circle(size).move(x, y).fill(getFill(colors)).transform({rotation: randomlyRotate ? getRandomRotationByInterval(rotationAngle) : rotationAngle});
 }
 
 const elbow = (size, x, y) => {
@@ -180,7 +181,7 @@ const elbow = (size, x, y) => {
     linecap: 'round'
   })
   .fill('none')
-  group.transform({rotation: getRandomRotationByInterval(rotationAngle)});
+  group.transform({rotation: randomlyRotate ? getRandomRotationByInterval(rotationAngle) : rotationAngle});
 }
 
 const quarterCircle = (size, x, y) => {
@@ -201,7 +202,7 @@ const wonkyCircle = (size, x, y, path, fill) => {
     })
     .fill('none')
   }
-  group.transform({rotation: getRandomRotationByInterval(rotationAngle)});
+  group.transform({rotation: randomlyRotate ? getRandomRotationByInterval(rotationAngle) : rotationAngle});
   return group;
   // return generateFromPath(getRandomArrayVal(blobs), size, x, y)
 }
@@ -231,7 +232,7 @@ const jawn = (size, x, y) => {
   group.size(size, size).move(x, y).scale(size/100, size/100);
   group.path("M50 0h50v100H0z").fill(getFill(colors));
   group.path("M100 100V0L50 100z").fill(getFill(colors));
-  group.transform({rotation: getRandomRotationByInterval(rotationAngle)});
+  group.transform({rotation: randomlyRotate ? getRandomRotationByInterval(rotationAngle) : rotationAngle});
 }
 
 const waves = (size, x, y) => {
@@ -245,7 +246,7 @@ const waves = (size, x, y) => {
   })
   .fill('none')
   .transform({
-    rotation: getRandomRotationByInterval(rotationAngle),
+    rotation: randomlyRotate ? getRandomRotationByInterval(rotationAngle) : rotationAngle,
   });
 }
 
@@ -253,14 +254,14 @@ const pacman = (size, x, y) => {
   const group = draw.group().move(x, y).fill(getFill(colors));
   group.circle(size);
   group.rect(size, size/2);
-  group.transform({rotation: getRandomRotationByInterval(rotationAngle)});
+  group.transform({rotation: randomlyRotate ? getRandomRotationByInterval(rotationAngle) : rotationAngle});
 }
 
 const tear = (size, x, y) => {
   const group = draw.group().move(x, y).fill(getFill(colors));
   group.circle(size);
   group.rect(size/2, size/2);
-  group.transform({rotation: getRandomRotationByInterval(rotationAngle)});
+  group.transform({rotation: randomlyRotate ? getRandomRotationByInterval(rotationAngle) : rotationAngle});
 }
 
 const line = (size, x, y) => {
@@ -270,14 +271,14 @@ const line = (size, x, y) => {
     width: strokeWidth,
     linecap: 'round'
   })
-  .transform({rotation: getRandomRotationByInterval(rotationAngle)});
+  .transform({rotation: randomlyRotate ? getRandomRotationByInterval(rotationAngle) : rotationAngle});
 }
 
 const tine = (size, x, y) => {
   return draw.polyline([[0, size/2], [0, size], [size/2, size], [size, 0]])
   .move(x, y)
   .fill(getFill(colors))
-  .transform({rotation: getRandomRotationByInterval(rotationAngle)});
+  .transform({rotation: randomlyRotate ? getRandomRotationByInterval(rotationAngle) : rotationAngle});
 }
 
 
@@ -328,7 +329,7 @@ const processes = {
       const x = canvasWidth/2 - canvasWidth * (1 - i/10)/2;
       const y = canvasHeight/2 - canvasHeight * (1 - i/10)/2;
       strokeWidth = stroke * (250/size);
-      wonkyCircle(size, x, y, path, getRandomArrayVal([false]));
+      wonkyCircle(size, x, y, path, getRandomArrayVal([false, true]));
     }
   },
   sapphire: () => {
@@ -341,6 +342,14 @@ const processes = {
     drawRects(rowSize);
     scale = initialScale * .25;
     drawRects(rowSize);
+  },
+  lapis: () => {
+    randomlyRotate = false;
+    rotationAngle = getRandomInt(0, 360);
+    const rotationAmount = getRandomInt(1, rowSize*2)/10;
+    drawRects(rowSize, false, () => {
+      rotationAngle += rotationAmount;
+    });
   },
 }
 
@@ -418,6 +427,7 @@ const generate = () => {
   } else {
     drawRects(rowSize);
   }
+  randomlyRotate = true;
 }
 
 const bindStaticEvents = () => {

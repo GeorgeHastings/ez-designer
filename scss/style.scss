@@ -86,7 +86,7 @@ body {
 
 label {
   color: $gray30;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
 }
 
 .colors,
@@ -158,30 +158,35 @@ label {
 }
 
 .parameters {
+	display: flex;
+	flex-wrap: wrap;
   margin-bottom: 2rem;
 }
 
 .parameter {
   display: flex;
+	width: 50%;
   align-items: center;
   justify-content: space-between;
   font-size: 1.4rem;
+	margin-top: 1rem;
 
-  & + .parameter {
-    margin-top: 1rem;
-  }
+  // & + .parameter {
+  //   margin-top: 1rem;
+  // }
 
   label {
     color: $gray30;
   }
 
   input {
-    height: 4rem;
-    border: 1px solid $gray20;
+    height: 3rem;
+    // border: 1px solid $gray20;
+		border: none;
     border-radius: 0.2rem;
     padding: 0 1rem;
     font: inherit;
-    max-width: 10rem;
+    max-width: 6rem;
 
     &:focus {
       outline: none;
