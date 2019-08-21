@@ -72,29 +72,13 @@ const wackyBlobs = [
 ]
 
 let colors = [
-  '#FED34D',
-  '#FDB365',
-  '#D6AB04',
-  '#312944',
-  '#005786',
-  '#fe6b4e',
-  '#cc3378',
-  '#c6f8db',
-  '#1BE64E',
-  '#1cd58b',
-  '#286495',
-  '#282451',
-  '#040f78',
-  '#5055B7',
-  '#e6455d',
-  '#c6dfff',
-  '#35bef8',
-  '#f6ebd4',
-  '#fac4b7',
-  '#46305f',
-  '#3ebea2',
-  '#2E735D',
-  '#154A48',
+  '#002737',
+  '#3F32D3',
+  '#00C6D2',
+  '#F4F0E9',
+  '#FF728E',
+  '#FFD664',
+  '#19756A',
   '#ffffff',
 ];
 
@@ -188,7 +172,12 @@ const quarterCircle = (size, x, y) => {
   generateFromPath("M100 0C44.772 0 0 44.772 0 100h100V0z", size, x, y)
 }
 
+const tulip = (size, x, y) => {
+  generateFromPath("M50 50c0-27.614 22.386-50 50-50v50c0 27.614-22.386 50-50 50V50zM0 50V0c27.614 0 50 22.386 50 50v50C22.386 100 0 77.614 0 50z", size, x, y)
+}
+
 const wonkyCircle = (size, x, y, path, fill) => {
+  fill = true;
   const group = draw.group();
   group.size(size, size).move(x, y).scale(size/100, size/100);
   group.path(path || getRandomArrayVal(blobs))
@@ -300,7 +289,8 @@ const getActiveShapes = () => {
     "shapeTine": tine,
     "shapeLeaf": leaf,
     "shapeStar": star,
-    "shapeRainbowLines": rainbowLines
+    "shapeRainbowLines": rainbowLines,
+    "shapeTulip": tulip
   }
 
   Object.keys(keys).forEach(key => {
@@ -332,6 +322,13 @@ const processes = {
       wonkyCircle(size, x, y, path, getRandomArrayVal([false, true]));
     }
   },
+  ruby: () => {
+    // density = 50;
+    let initialScale = scale;
+    drawRects(rowSize);
+    scale = initialScale * .5;
+    drawRects(rowSize);
+  },
   sapphire: () => {
     // density = 50;
     let initialScale = scale;
@@ -351,6 +348,20 @@ const processes = {
       rotationAngle += rotationAmount;
     });
   },
+  emerald: () => {
+    let initialScale = scale;
+    rotationAngle = 1;
+    density = 75;
+    drawRects(2);
+    scale = initialScale * .75;
+    density = 50;
+    drawRects(3);
+    scale = initialScale * .50;
+    density = 25;
+    drawRects(4);
+    scale = initialScale * .25;
+    drawRects(5);
+  }
 }
 
 const drawRects = (rowSize, shapes, callback) => {
