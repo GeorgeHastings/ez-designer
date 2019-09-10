@@ -285,6 +285,14 @@
 		"oAP": "/index.html",
 		"oF": 0
 		},
+	"/package-lock.json": {
+		"ft": 524288,
+		"oA": 1,
+		"oAP": "/package-lock-min.json",
+		"oF": 0,
+		"oO": 0,
+		"oS": 1
+		},
 	"/README.md": {
 		"cB": 0,
 		"cS": 0,
@@ -371,6 +379,72 @@
 		"oF": 2,
 		"oS": 0,
 		"uL": 1
+		},
+	"/Users/georgehastings/.Trash/node_modules/computed-styles/lib/index.js": {
+		"bF": 0,
+		"ft": 64,
+		"ma": 0,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "/node_modules/computed-styles/lib/index-min.js",
+		"oF": 0,
+		"sC": 3,
+		"tS": 0
+		},
+	"/Users/georgehastings/.Trash/node_modules/file-saver/FileSaver.js": {
+		"bF": 0,
+		"ft": 64,
+		"ma": 0,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "/node_modules/file-saver/FileSaver-min.js",
+		"oF": 0,
+		"sC": 3,
+		"tS": 0
+		},
+	"/Users/georgehastings/.Trash/node_modules/svgsaver/src/clonesvg.js": {
+		"bF": 0,
+		"ft": 64,
+		"ma": 0,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "/node_modules/svgsaver/src/clonesvg-min.js",
+		"oF": 0,
+		"sC": 3,
+		"tS": 0
+		},
+	"/Users/georgehastings/.Trash/node_modules/svgsaver/src/collection.js": {
+		"bF": 0,
+		"ft": 64,
+		"ma": 0,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "/node_modules/svgsaver/src/collection-min.js",
+		"oF": 0,
+		"sC": 3,
+		"tS": 0
+		},
+	"/Users/georgehastings/.Trash/node_modules/svgsaver/src/saveuri.js": {
+		"bF": 0,
+		"ft": 64,
+		"ma": 0,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "/node_modules/svgsaver/src/saveuri-min.js",
+		"oF": 0,
+		"sC": 3,
+		"tS": 0
+		},
+	"/Users/georgehastings/.Trash/node_modules/svgsaver/src/utils.js": {
+		"bF": 0,
+		"ft": 64,
+		"ma": 0,
+		"mi": 1,
+		"oA": 1,
+		"oAP": "/node_modules/svgsaver/src/utils-min.js",
+		"oF": 0,
+		"sC": 3,
+		"tS": 0
 		}
 	},
 "hooks": [

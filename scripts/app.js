@@ -361,7 +361,16 @@ const processes = {
     drawRects(4);
     scale = initialScale * .25;
     drawRects(5);
-  }
+  },
+  opal: () => {
+    colors = ['#002737', '#3F32D3'];
+    size: ;
+    scale = 2;
+    processes.emerald();
+    scale = 0.5;
+    colors = ['#00C6D2'];
+    processes.lapis();
+  },
 }
 
 const drawRects = (rowSize, shapes, callback) => {
@@ -425,7 +434,7 @@ const generate = () => {
   fillAsGradient = $('fillAsGradient').checked;
   scale = $('scaleInput').value/100;
 
-  $('download').innerText = 'Copy to clipboard';
+  $('copy').innerText = 'Copy to clipboard';
 
   draw.size(canvasWidth, canvasHeight)
 
@@ -446,11 +455,24 @@ const bindStaticEvents = () => {
   $('clearCanvas').onclick = () => {
     draw.clear();
   }
-  $('download').onclick = () => {
+  $('copy').onclick = () => {
     $('textarea').value = $('drawing').firstChild.outerHTML;
     $('textarea').select();
     document.execCommand('copy');
-    $('download').innerText = `Copied!`;
+    $('copy').innerText = `Copied!`;
+  }
+
+  $('download').onclick = () => {
+    const s = new XMLSerializer().serializeToString(document.getElementById('drawing').firstElementChild);
+    const encodedData = window.btoa(s);
+    const uri = `data:image/svg+xml;base64,${encodedData}`;
+    const element = document.createElement('a');
+    element.setAttribute('href', uri);
+    element.setAttribute('download', 'gem');
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element)
   }
 }
 
