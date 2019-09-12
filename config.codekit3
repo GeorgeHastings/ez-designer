@@ -402,17 +402,6 @@
 		"sC": 3,
 		"tS": 0
 		},
-	"/Users/georgehastings/.Trash/node_modules/svgsaver/src/clonesvg.js": {
-		"bF": 0,
-		"ft": 64,
-		"ma": 0,
-		"mi": 1,
-		"oA": 1,
-		"oAP": "/node_modules/svgsaver/src/clonesvg-min.js",
-		"oF": 0,
-		"sC": 3,
-		"tS": 0
-		},
 	"/Users/georgehastings/.Trash/node_modules/svgsaver/src/collection.js": {
 		"bF": 0,
 		"ft": 64,
@@ -420,17 +409,6 @@
 		"mi": 1,
 		"oA": 1,
 		"oAP": "/node_modules/svgsaver/src/collection-min.js",
-		"oF": 0,
-		"sC": 3,
-		"tS": 0
-		},
-	"/Users/georgehastings/.Trash/node_modules/svgsaver/src/saveuri.js": {
-		"bF": 0,
-		"ft": 64,
-		"ma": 0,
-		"mi": 1,
-		"oA": 1,
-		"oAP": "/node_modules/svgsaver/src/saveuri-min.js",
 		"oF": 0,
 		"sC": 3,
 		"tS": 0

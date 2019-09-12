@@ -73,12 +73,24 @@ const wackyBlobs = [
 
 let colors = [
   '#002737',
+  '#2E29AD',
   '#3F32D3',
+  '#6D57FF',
+  '#00BABA',
   '#00C6D2',
+  '#4BEDEB',
+  '#E8E2DA',
   '#F4F0E9',
-  '#FF728E',
+  '#FAF8F5',
+  '#EDBA53',
   '#FFD664',
-  '#19756A',
+  '#FFE88C',
+  '#C9597C',
+  '#DD728E',
+  '#FF94A8',
+  '#005C54',
+  '#007567',
+  '#00947E',
   '#ffffff',
 ];
 
