@@ -127,11 +127,13 @@ label {
 
 .parameter {
   display: flex;
-  width: 50%;
+  width: calc(50% - 1rem);
   align-items: center;
   justify-content: space-between;
   font-size: 1.4rem;
   margin-top: 1rem; }
+  .parameter:nth-child(even) {
+    margin-left: 1rem; }
   .parameter label {
     color: #a5a5a5; }
   .parameter input {
@@ -140,9 +142,11 @@ label {
     border-radius: 0.2rem;
     padding: 0 1rem;
     font: inherit;
-    max-width: 6rem; }
+    width: 6.5rem;
+    text-align: left; }
     .parameter input:focus {
-      outline: none; }
+      outline: none;
+      background-color: #f9f9f9; }
 
 .processes {
   position: relative;

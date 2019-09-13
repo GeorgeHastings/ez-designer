@@ -317,10 +317,10 @@ const getActiveShapes = () => {
 const processes = {
   amethyst: () => {
     density = 50;
-    drawRects(2);
-    drawRects(4);
+    drawShapes(2);
+    drawShapes(4);
     density = 25;
-    drawRects(8);
+    drawShapes(8);
   },
   topaz: () => {
     const path = getRandomArrayVal([...blobs, ...wackyBlobs]);
@@ -337,26 +337,27 @@ const processes = {
   ruby: () => {
     // density = 50;
     let initialScale = scale;
-    drawRects(rowSize);
+    drawShapes(rowSize);
     scale = initialScale * .5;
-    drawRects(rowSize);
+    drawShapes(rowSize);
   },
   sapphire: () => {
     // density = 50;
     let initialScale = scale;
-    drawRects(rowSize);
+    drawShapes(rowSize);
     scale = initialScale * .75;
-    drawRects(rowSize);
+    drawShapes(rowSize);
     scale = initialScale * .5;
-    drawRects(rowSize);
+    drawShapes(rowSize);
     scale = initialScale * .25;
-    drawRects(rowSize);
+    drawShapes(rowSize);
   },
   lapis: () => {
     randomlyRotate = false;
     rotationAngle = getRandomInt(0, 360);
     const rotationAmount = getRandomInt(1, rowSize*2)/10;
-    drawRects(rowSize, false, () => {
+    const s = shape || false;
+    drawShapes(rowSize, [s], () => {
       rotationAngle += rotationAmount;
     });
   },
@@ -364,28 +365,46 @@ const processes = {
     let initialScale = scale;
     rotationAngle = 1;
     density = 75;
-    drawRects(2);
+    drawShapes(2);
     scale = initialScale * .75;
     density = 50;
-    drawRects(3);
+    drawShapes(3);
     scale = initialScale * .50;
     density = 25;
-    drawRects(4);
+    drawShapes(4);
     scale = initialScale * .25;
-    drawRects(5);
+    drawShapes(5);
   },
   opal: () => {
     colors = ['#002737', '#3F32D3'];
-    size: ;
     scale = 2;
     processes.emerald();
     scale = 0.5;
     colors = ['#00C6D2'];
     processes.lapis();
   },
+  diamond: () => {
+    scale = 0.5;
+    rowSize = 35;
+    const pickedColors = colors;
+    const group = draw.group();
+    const lines = draw.group();
+    const path = getRandomArrayVal([...blobs, ...wackyBlobs]);
+    colors = ['#fff'];
+    const mask = wonkyCircle(canvasWidth, 0, 0, path, false);
+    colors = pickedColors;
+    randomlyRotate = false;
+    rotationAngle = getRandomInt(0, 360);
+    drawShapes(rowSize, [line], shape => {
+      rotationAngle += 5.2;
+      lines.add(shape);
+    });
+    group.add(lines);
+    group.maskWith(mask);
+  }
 }
 
-const drawRects = (rowSize, shapes, callback) => {
+const drawShapes = (rowSize, shapes, callback) => {
   let size = canvasWidth/rowSize;
   const amt = (canvasWidth / size) * (canvasHeight / size);
   let newsize = size * scale;
@@ -399,7 +418,8 @@ const drawRects = (rowSize, shapes, callback) => {
     y = y + size/2 - newsize/2;
 
     if(rollDicePct(density)) {
-      const shape = getRandomArrayVal(getActiveShapes())(newsize, x, y);
+      const s = shapes || getActiveShapes();
+      const shape = getRandomArrayVal(s)(newsize, x, y);
       if(callback) {
         callback(shape);
       }
@@ -457,7 +477,7 @@ const generate = () => {
   if($('selectProcess').value !== 'none') {
     processes[$('selectProcess').value]();
   } else {
-    drawRects(rowSize);
+    drawShapes(rowSize);
   }
   randomlyRotate = true;
 }
@@ -475,16 +495,33 @@ const bindStaticEvents = () => {
   }
 
   $('download').onclick = () => {
-    const s = new XMLSerializer().serializeToString(document.getElementById('drawing').firstElementChild);
-    const encodedData = window.btoa(s);
-    const uri = `data:image/svg+xml;base64,${encodedData}`;
-    const element = document.createElement('a');
-    element.setAttribute('href', uri);
-    element.setAttribute('download', 'gem');
-    element.style.display = 'none';
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element)
+    const canvas = document.createElement('canvas');
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+    document.body.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
+    const image = new Image();
+
+    var svg = document.getElementById("SvgjsSvg1001");
+    var serializer = new XMLSerializer();
+    var svg_blob = new Blob([serializer.serializeToString(svg)],
+                            {'type': "image/svg+xml"});
+    var url = URL.createObjectURL(svg_blob);
+
+    image.onload = function() {
+      ctx.drawImage(image, 0, 0);
+      var png = canvas.toDataURL("image/png");
+      const element = document.createElement('a');
+      element.setAttribute('href', png);
+      element.setAttribute('download', 'gem');
+      element.style.display = 'none';
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+      document.body.removeChild(canvas);
+    };
+
+    image.src = url
   }
 }
 
