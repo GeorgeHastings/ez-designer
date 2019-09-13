@@ -496,8 +496,8 @@ const bindStaticEvents = () => {
 
   $('download').onclick = () => {
     const canvas = document.createElement('canvas');
-    canvas.width = canvasWidth;
-    canvas.height = canvasHeight;
+    canvas.width = canvasWidth * 2;
+    canvas.height = canvasHeight * 2;
     document.body.appendChild(canvas);
     const ctx = canvas.getContext('2d');
     const image = new Image();
@@ -509,7 +509,8 @@ const bindStaticEvents = () => {
     var url = URL.createObjectURL(svg_blob);
 
     image.onload = function() {
-      ctx.drawImage(image, 0, 0);
+      ctx.drawImage(image, 0, 0, image.width*2, image.height*2);
+      ctx.scale(2, 2)
       var png = canvas.toDataURL("image/png");
       const element = document.createElement('a');
       element.setAttribute('href', png);
