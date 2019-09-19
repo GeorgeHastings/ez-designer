@@ -189,7 +189,7 @@ const tulip = (size, x, y) => {
 }
 
 const wonkyCircle = (size, x, y, path, fill) => {
-  fill = true;
+  // fill = true;
   const group = draw.group();
   group.size(size, size).move(x, y).scale(size/100, size/100);
   group.path(path || getRandomArrayVal(blobs))
@@ -202,6 +202,7 @@ const wonkyCircle = (size, x, y, path, fill) => {
       linecap: 'round'
     })
     .fill('none')
+    console.log('strokin')
   }
   group.transform({rotation: randomlyRotate ? getRandomRotationByInterval(rotationAngle) : rotationAngle});
   return group;
@@ -326,12 +327,12 @@ const processes = {
     const path = getRandomArrayVal([...blobs, ...wackyBlobs]);
     const stroke = strokeWidth;
     rotationAngle = 0;
-    for(let i = 0; i < 8; i++) {
+    for(let i = 0; i < 10; i++) {
       const size = Math.round(canvasWidth * (1 - i/10));
       const x = canvasWidth/2 - canvasWidth * (1 - i/10)/2;
       const y = canvasHeight/2 - canvasHeight * (1 - i/10)/2;
-      strokeWidth = stroke * (250/size);
-      wonkyCircle(size, x, y, path, getRandomArrayVal([false, true]));
+      strokeWidth = stroke * (125/size);
+      wonkyCircle(size, x, y, path, false);
     }
   },
   ruby: () => {
@@ -510,7 +511,6 @@ const bindStaticEvents = () => {
 
     image.onload = function() {
       ctx.drawImage(image, 0, 0, image.width*2, image.height*2);
-      ctx.scale(2, 2)
       var png = canvas.toDataURL("image/png");
       const element = document.createElement('a');
       element.setAttribute('href', png);
