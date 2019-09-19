@@ -189,11 +189,10 @@ const tulip = (size, x, y) => {
 }
 
 const wonkyCircle = (size, x, y, path, fill) => {
-  fill = fill ? fill : true;
   const group = draw.group();
   group.size(size, size).move(x, y).scale(size/100, size/100);
   group.path(path || getRandomArrayVal(blobs))
-  if(fill) {
+  if(!fill) {
     group.fill(getFill(colors));
   } else {
     group.stroke({
@@ -332,7 +331,7 @@ const processes = {
       const x = canvasWidth/2 - canvasWidth * (1 - i/10)/2;
       const y = canvasHeight/2 - canvasHeight * (1 - i/10)/2;
       strokeWidth = stroke * (125/size);
-      wonkyCircle(size, x, y, path, false);
+      wonkyCircle(size, x, y, path, true);
     }
   },
   ruby: () => {
@@ -392,7 +391,7 @@ const processes = {
     const lines = draw.group();
     const path = getRandomArrayVal([...blobs, ...wackyBlobs]);
     colors = ['#fff'];
-    const mask = wonkyCircle(canvasWidth, 0, 0, path, false);
+    const mask = wonkyCircle(canvasWidth, 0, 0, path, true);
     colors = pickedColors;
     randomlyRotate = false;
     rotationAngle = getRandomInt(0, 360);
