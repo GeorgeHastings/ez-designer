@@ -189,7 +189,7 @@ const tulip = (size, x, y) => {
 }
 
 const wonkyCircle = (size, x, y, path, fill) => {
-  // fill = true;
+  fill = fill ? fill : true;
   const group = draw.group();
   group.size(size, size).move(x, y).scale(size/100, size/100);
   group.path(path || getRandomArrayVal(blobs))
