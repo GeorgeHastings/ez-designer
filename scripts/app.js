@@ -78,6 +78,9 @@ let colors = [
   '#00BABA',
   '#00C6D2',
   '#4BEDEB',
+  '#D9ECEC',
+  '#E9F4F4',
+  '#F2FCFC',
   '#E8E2DA',
   '#F4F0E9',
   '#FAF8F5',
@@ -391,7 +394,7 @@ const processes = {
     const lines = draw.group();
     const path = getRandomArrayVal([...blobs, ...wackyBlobs]);
     colors = ['#fff'];
-    const mask = wonkyCircle(canvasWidth, 0, 0, path, true);
+    const mask = wonkyCircle(canvasWidth, 0, 0, path, false);
     colors = pickedColors;
     randomlyRotate = false;
     rotationAngle = getRandomInt(0, 360);
