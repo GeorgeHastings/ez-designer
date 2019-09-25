@@ -359,8 +359,7 @@ const processes = {
     randomlyRotate = false;
     rotationAngle = getRandomInt(0, 360);
     const rotationAmount = getRandomInt(1, rowSize*2)/10;
-    const s = shape || false;
-    drawShapes(rowSize, [s], () => {
+    drawShapes(rowSize, null, () => {
       rotationAngle += rotationAmount;
     });
   },
