@@ -385,6 +385,11 @@ const processes = {
     colors = ['#00C6D2'];
     processes.lapis();
   },
+  aquamarine: () => {
+    drawShapes(rowSize, [square]);
+    drawShapes(rowSize);
+
+  },
   diamond: () => {
     scale = 0.5;
     rowSize = 35;
