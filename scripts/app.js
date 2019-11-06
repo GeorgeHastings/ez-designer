@@ -75,7 +75,7 @@ let colors = [
   '#2E29AD',
   '#3F32D3',
   '#6D57FF',
-  '#00BABA',
+  '#00AFBA',
   '#00C6D2',
   '#4BEDEB',
   '#D9ECEC',
@@ -153,7 +153,19 @@ const octagon = (size, x, y) => {
 }
 
 const circle = (size, x, y) => {
-  return draw.circle(size).move(x, y).fill(getFill(colors)).transform({rotation: randomlyRotate ? getRandomRotationByInterval(rotationAngle) : rotationAngle});
+  return draw.circle(size).move(x, y).fill(getFill(colors));
+}
+
+const dots = (size, x, y) => {
+  const group = draw.group();
+  const color = getFill(colors);
+  const r = size/30;
+  for(let i = 0; i < 16; i++) {
+    let xa = x + (i % 4) * size / 4 + (3*r);
+    let ya = y + Math.floor(i/4) * size / 4 + (3*r);
+    draw.circle(r*2).move(xa, ya).fill(color);
+  }
+  return group;
 }
 
 const elbow = (size, x, y) => {
@@ -305,7 +317,8 @@ const getActiveShapes = () => {
     "shapeLeaf": leaf,
     "shapeStar": star,
     "shapeRainbowLines": rainbowLines,
-    "shapeTulip": tulip
+    "shapeTulip": tulip,
+    "shapeDots": dots
   }
 
   Object.keys(keys).forEach(key => {
