@@ -159,10 +159,10 @@ const circle = (size, x, y) => {
 const dots = (size, x, y) => {
   const group = draw.group();
   const color = getFill(colors);
-  const r = size/30;
+  const r = size/40;
   for(let i = 0; i < 16; i++) {
-    let xa = x + (i % 4) * size / 4 + (3*r);
-    let ya = y + Math.floor(i/4) * size / 4 + (3*r);
+    let xa = x + (i % 4) * size / 4 + (4*r);
+    let ya = y + Math.floor(i/4) * size / 4 + (4*r);
     draw.circle(r*2).move(xa, ya).fill(color);
   }
   return group;
