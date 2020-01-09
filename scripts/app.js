@@ -466,7 +466,7 @@ const renderColorOptions = () => {
   colors.forEach((color, index) => {
     $('.colors').appendChild($html(`
       <div class="color-option">
-        <input class="color" type="checkbox" data-color="${color}" ${$if(index < 4, 'checked')}>
+        <input class="color" type="checkbox" id=${'color-' + index} name=${'color-' + index} data-color="${color}">
         <label style="background-color: ${color}">
           <img src="assets/check.svg">
         </label>
@@ -486,6 +486,14 @@ const generate = () => {
   fillAsGradient = $('fillAsGradient').checked;
   scale = $('scaleInput').value/100;
 
+  const serialized = new URLSearchParams(new FormData(document.querySelector("#controls-form"))).toString();
+
+  if (window.location.href.split("?")[1] !== serialized) {
+    const gemName = "Gem " + Math.floor(Math.random() * 10000);
+    document.querySelector('title').innerText = gemName;
+    window.history.pushState({}, gemName, "?" + serialized);
+  }
+
   $('copy').innerText = 'Copy to clipboard';
 
   draw.size(canvasWidth, canvasHeight)
@@ -500,6 +508,20 @@ const generate = () => {
     drawShapes(rowSize);
   }
   randomlyRotate = true;
+}
+
+const loadFromQueryParams = () => {
+  const searchParams = (new URL(document.location)).searchParams;
+  if (searchParams.length == 0) {
+    // turn on first 4 colors & shapeTriangle shape!
+  }
+  searchParams.forEach((value, key) => {
+    if (value === "on") {
+      $("#" + key).checked = true;
+    } else {
+      $("#" + key).value = value;
+    }
+  });
 }
 
 const bindStaticEvents = () => {
@@ -548,5 +570,6 @@ const bindStaticEvents = () => {
 document.addEventListener('DOMContentLoaded', () => {
   renderColorOptions();
   bindStaticEvents();
+  loadFromQueryParams();
   generate();
 })
