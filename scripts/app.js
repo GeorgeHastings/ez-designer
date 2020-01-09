@@ -512,9 +512,15 @@ const generate = () => {
 
 const loadFromQueryParams = () => {
   const searchParams = (new URL(document.location)).searchParams;
-  if (searchParams.length == 0) {
-    // turn on first 4 colors & shapeTriangle shape!
+
+  if (searchParams.toString().length == 0) {
+    $("#color-0").checked = true;
+    $("#color-1").checked = true;
+    $("#color-2").checked = true;
+    $("#color-3").checked = true;
+    $("#shapeTriangle").checked = true;
   }
+
   searchParams.forEach((value, key) => {
     if (value === "on") {
       $("#" + key).checked = true;
