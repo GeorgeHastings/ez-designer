@@ -8,15 +8,35 @@ import {
   rollDicePct
 } from './helpers.js';
 
-let canvasWidth = 500;
-let canvasHeight = 500;
-let rowSize = 5;
-let density = 100;
-let scale = 100;
-let rotationAngle = 90;
-let strokeWidth = 1;
-let fillAsGradient = false;
-let randomlyRotate = true;
+const VECTORS = {
+  canvasWidth: 500,
+  canvasHeight: 700,
+  rowSize: 15,
+  density: 100,
+  scale: 40,
+  rotationAngle: 90,
+  strokeWidth: 2,
+  fillAsGradient: false,
+  randomlyRotate: false,
+  colors: ['#002737']
+}
+
+const DEFAULT = {
+  canvasWidth: 500,
+  canvasHeight: 500,
+  rowSize: 5,
+  density: 100,
+  scale: 100,
+  rotationAngle: 90,
+  strokeWidth: 1,
+  fillAsGradient: false,
+  randomlyRotate: true,
+  colors: ['#3F32D3', '#00C6D2', '#002737', '#F4F0E9']
+}
+
+let settings = DEFAULT;
+
+settings = VECTORS;
 
 const blobs = [
   "M85.799 24.614c8.41 12.401 12.501 26.359 9.815 39.01-2.686 12.627-12.2 23.949-24.651 30.45-12.451 6.477-27.84 8.134-40.014 2.51-12.175-5.647-21.137-18.55-24.928-33.21-3.815-14.686-2.46-31.103 6.05-43.53C20.606 7.395 36.321-1.09 50.504.115c14.208 1.18 26.885 12.074 35.295 24.5z",
@@ -97,7 +117,7 @@ let colors = [
   '#ffffff',
 ];
 
-let draw = SVG('drawing').size(canvasWidth, canvasHeight);
+let draw = SVG('drawing').size(settings.canvasWidth, settings.canvasHeight);
 
 const gradient = colors => {
   return draw.gradient('linear', stop => {
@@ -116,31 +136,31 @@ const generateFromPath = (path, size, x, y, stroke) => {
   } else {
     group.stroke({
       color: getRandomArrayVal(colors),
-      width: strokeWidth,
+      width: settings.strokeWidth,
       linecap: 'round'
     })
     .fill('none')
   }
-  group.transform({rotation: randomlyRotate ? getRandomRotationByInterval(rotationAngle) : rotationAngle});
+  group.transform({rotation: settings.randomlyRotate ? getRandomRotationByInterval(settings.rotationAngle) : settings.rotationAngle});
   return group;
 }
 
 const getFill = colors => {
-  return fillAsGradient ? gradient(colors) : getRandomArrayVal(colors)
+  return settings.fillAsGradient ? gradient(colors) : getRandomArrayVal(colors)
 }
 
 const triangle = (size, x, y) => {
   return draw.polyline([[0,0], [0, size], [size, size], [0,0]])
   .move(x, y)
   .fill(getFill(colors))
-  .transform({rotation: randomlyRotate ? getRandomRotationByInterval(rotationAngle) : rotationAngle});
+  .transform({rotation: settings.randomlyRotate ? getRandomRotationByInterval(settings.rotationAngle) : settings.rotationAngle});
 }
 
 const square = (size, x, y) => {
   return draw.rect(size, size)
   .move(x, y)
   .fill(getFill(colors))
-  .transform({rotation: randomlyRotate ? getRandomRotationByInterval(rotationAngle) : rotationAngle});
+  .transform({rotation: settings.randomlyRotate ? getRandomRotationByInterval(settings.rotationAngle) : settings.rotationAngle});
 }
 
 const octagon = (size, x, y) => {
@@ -149,11 +169,12 @@ const octagon = (size, x, y) => {
   return draw.polyline([[size/2, 0], [a, b], [size, size/2], [a, a], [size/2, size], [b, a], [0, size/2], [b, b]])
   .move(x, y)
   .fill(getFill(colors))
-  .transform({rotation: randomlyRotate ? getRandomRotationByInterval(rotationAngle) : rotationAngle});
+  .transform({rotation: settings.randomlyRotate ? getRandomRotationByInterval(settings.rotationAngle) : settings.rotationAngle});
 }
 
 const circle = (size, x, y) => {
-  return draw.circle(size).move(x, y).fill(getFill(colors));
+  return draw.circle(size).move(x, y).fill(getFill(colors))
+  .transform({rotation: settings.randomlyRotate ? getRandomRotationByInterval(settings.rotationAngle) : settings.rotationAngle});
 }
 
 const dots = (size, x, y) => {
@@ -174,25 +195,25 @@ const elbow = (size, x, y) => {
   group.polyline([[0,0], [0, size], [size, size]])
   .stroke({
     color: getRandomArrayVal(colors),
-    width: strokeWidth,
+    width: settings.strokeWidth,
     linecap: 'round'
   })
   .fill('none')
   group.polyline([[size*.25, 0], [size*.25, size*.75], [size, size*.75]])
   .stroke({
     color: getRandomArrayVal(colors),
-    width: strokeWidth,
+    width: settings.strokeWidth,
     linecap: 'round'
   })
   .fill('none')
   group.polyline([[size * .5, 0], [size*.5, size*.5], [size, size*.5]])
   .stroke({
     color: getRandomArrayVal(colors),
-    width: strokeWidth,
+    width: settings.strokeWidth,
     linecap: 'round'
   })
   .fill('none')
-  group.transform({rotation: randomlyRotate ? getRandomRotationByInterval(rotationAngle) : rotationAngle});
+  group.transform({rotation: settings.randomlyRotate ? getRandomRotationByInterval(settings.rotationAngle) : settings.rotationAngle});
 }
 
 const quarterCircle = (size, x, y) => {
@@ -212,13 +233,13 @@ const wonkyCircle = (size, x, y, path, fill) => {
   } else {
     group.stroke({
       color: getRandomArrayVal(colors),
-      width: strokeWidth,
+      width: settings.strokeWidth,
       linecap: 'round'
     })
     .fill('none')
     console.log('strokin')
   }
-  group.transform({rotation: randomlyRotate ? getRandomRotationByInterval(rotationAngle) : rotationAngle});
+  group.transform({rotation: settings.randomlyRotate ? getRandomRotationByInterval(settings.rotationAngle) : settings.rotationAngle});
   return group;
   // return generateFromPath(getRandomArrayVal(blobs), size, x, y)
 }
@@ -248,7 +269,7 @@ const jawn = (size, x, y) => {
   group.size(size, size).move(x, y).scale(size/100, size/100);
   group.path("M50 0h50v100H0z").fill(getFill(colors));
   group.path("M100 100V0L50 100z").fill(getFill(colors));
-  group.transform({rotation: randomlyRotate ? getRandomRotationByInterval(rotationAngle) : rotationAngle});
+  group.transform({rotation: settings.randomlyRotate ? getRandomRotationByInterval(settings.rotationAngle) : settings.rotationAngle});
 }
 
 const waves = (size, x, y) => {
@@ -257,12 +278,12 @@ const waves = (size, x, y) => {
   group.path("M0 17.06c16.933-10.08 33.6-10.08 50 0s33.067 10.08 50 0M0 50.06c16.933-10.08 33.6-10.08 50 0s33.067 10.08 50 0M0 83.06c16.933-10.08 33.6-10.08 50 0s33.067 10.08 50 0")
   .stroke({
     color: getRandomArrayVal(colors),
-    width: strokeWidth,
+    width: settings.strokeWidth,
     linecap: 'round'
   })
   .fill('none')
   .transform({
-    rotation: randomlyRotate ? getRandomRotationByInterval(rotationAngle) : rotationAngle,
+    rotation: settings.randomlyRotate ? getRandomRotationByInterval(settings.rotationAngle) : settings.rotationAngle,
   });
 }
 
@@ -270,31 +291,31 @@ const pacman = (size, x, y) => {
   const group = draw.group().move(x, y).fill(getFill(colors));
   group.circle(size);
   group.rect(size, size/2);
-  group.transform({rotation: randomlyRotate ? getRandomRotationByInterval(rotationAngle) : rotationAngle});
+  group.transform({rotation: settings.randomlyRotate ? getRandomRotationByInterval(settings.rotationAngle) : settings.rotationAngle});
 }
 
 const tear = (size, x, y) => {
   const group = draw.group().move(x, y).fill(getFill(colors));
   group.circle(size);
   group.rect(size/2, size/2);
-  group.transform({rotation: randomlyRotate ? getRandomRotationByInterval(rotationAngle) : rotationAngle});
+  group.transform({rotation: settings.randomlyRotate ? getRandomRotationByInterval(settings.rotationAngle) : settings.rotationAngle});
 }
 
 const line = (size, x, y) => {
   return draw.line(0, 0, size, size).move(x, y)
   .stroke({
     color: getRandomArrayVal(colors),
-    width: strokeWidth,
-    linecap: 'round'
+    width: settings.strokeWidth,
+    linecap: 'butt'
   })
-  .transform({rotation: randomlyRotate ? getRandomRotationByInterval(rotationAngle) : rotationAngle});
+  .transform({rotation: settings.randomlyRotate ? getRandomRotationByInterval(settings.rotationAngle) : settings.rotationAngle});
 }
 
 const tine = (size, x, y) => {
   return draw.polyline([[0, size/2], [0, size], [size/2, size], [size, 0]])
   .move(x, y)
   .fill(getFill(colors))
-  .transform({rotation: randomlyRotate ? getRandomRotationByInterval(rotationAngle) : rotationAngle});
+  .transform({rotation: settings.randomlyRotate ? getRandomRotationByInterval(settings.rotationAngle) : settings.rotationAngle});
 }
 
 
@@ -332,91 +353,111 @@ const getActiveShapes = () => {
 
 const processes = {
   amethyst: () => {
-    density = 50;
+    settings.density = 50;
     drawShapes(2);
     drawShapes(4);
-    density = 25;
+    settings.density = 25;
     drawShapes(8);
   },
   topaz: () => {
     const path = getRandomArrayVal([...blobs, ...wackyBlobs]);
-    const stroke = strokeWidth;
-    rotationAngle = 0;
+    const stroke = settings.strokeWidth;
+    settings.rotationAngle = 0;
     for(let i = 0; i < 10; i++) {
-      const size = Math.round(canvasWidth * (1 - i/10));
-      const x = canvasWidth/2 - canvasWidth * (1 - i/10)/2;
-      const y = canvasHeight/2 - canvasHeight * (1 - i/10)/2;
-      strokeWidth = stroke * (125/size);
+      const size = Math.round(settings.canvasWidth * (1 - i/10));
+      const x = settings.canvasWidth/2 - settings.canvasWidth * (1 - i/10)/2;
+      const y = settings.canvasHeight/2 - settings.canvasHeight * (1 - i/10)/2;
+      settings.strokeWidth = stroke * (125/size);
       wonkyCircle(size, x, y, path, true);
     }
   },
   ruby: () => {
     // density = 50;
-    let initialScale = scale;
-    drawShapes(rowSize);
-    scale = initialScale * .5;
-    drawShapes(rowSize);
+    let initialScale = settings.scale;
+    drawShapes(settings.rowSize);
+    settings.scale = initialScale * .5;
+    drawShapes(settings.rowSize);
   },
   sapphire: () => {
     // density = 50;
-    let initialScale = scale;
-    drawShapes(rowSize);
-    scale = initialScale * .75;
-    drawShapes(rowSize);
-    scale = initialScale * .5;
-    drawShapes(rowSize);
-    scale = initialScale * .25;
-    drawShapes(rowSize);
+    let initialScale = settings.scale;
+    drawShapes(settings.rowSize);
+    settings.scale = initialScale * .75;
+    drawShapes(settings.rowSize);
+    settings.scale = initialScale * .5;
+    drawShapes(settings.rowSize);
+    settings.scale = initialScale * .25;
+    drawShapes(settings.rowSize);
+  },
+  lapis2: () => {
+    settings.randomlyRotate = false;
+    settings.rotationAngle = getRandomInt(0, 360);
+    const rotationAmount = getRandomInt(1, settings.rowSize*2)/10;
+    drawShapes(settings.rowSize, null, () => {
+      settings.rotationAngle += rotationAmount;
+    });
   },
   lapis: () => {
-    randomlyRotate = false;
-    rotationAngle = getRandomInt(0, 360);
-    const rotationAmount = getRandomInt(1, rowSize*2)/10;
-    drawShapes(rowSize, null, () => {
-      rotationAngle += rotationAmount;
+    settings.randomlyRotate = false;
+    let rotationAmount = 0;
+    settings.rotationAngle = 0;
+    const loci = [
+      [getRandomInt(0, settings.canvasWidth), getRandomInt(0, settings.canvasHeight)],
+      [getRandomInt(0, settings.canvasWidth), getRandomInt(0, settings.canvasHeight)]
+    ]
+    drawShapes(settings.rowSize, null, (shape, x, y) => {
+      // console.log(x, y)
+      // const slope = (loci[0][1] - y)/(loci[0][0] - x);
+      const a = (x - loci[0][0]);
+      const b = (y - loci[0][1]);
+      const c = Math.round(Math.sqrt(a*a + b*b));
+      const z = (loci[0][1] - y);
+      // const deg = Math.cos(a/c);
+      // console.log(slope)
+      settings.rotationAngle = (c/settings.canvasWidth) * (360);
     });
   },
   emerald: () => {
-    let initialScale = scale;
-    rotationAngle = 1;
-    density = 75;
+    let initialScale = settings.scale;
+    settings.rotationAngle = 1;
+    settings.density = 75;
     drawShapes(2);
-    scale = initialScale * .75;
-    density = 50;
+    settings. scale = initialScale * .75;
+    settings.density = 50;
     drawShapes(3);
-    scale = initialScale * .50;
-    density = 25;
+    settings.scale = initialScale * .50;
+    settings.density = 25;
     drawShapes(4);
-    scale = initialScale * .25;
+    settings.scale = initialScale * .25;
     drawShapes(5);
   },
   opal: () => {
     colors = ['#002737', '#3F32D3'];
-    scale = 2;
+    settings.scale = 2;
     processes.emerald();
-    scale = 0.5;
+    settings.scale = 0.5;
     colors = ['#00C6D2'];
     processes.lapis();
   },
   aquamarine: () => {
-    drawShapes(rowSize, [square]);
-    drawShapes(rowSize);
+    drawShapes(settings.rowSize, [square]);
+    drawShapes(settings.rowSize);
 
   },
   diamond: () => {
-    scale = 0.5;
-    rowSize = 35;
+    settings.scale = 0.5;
+    settings.rowSize = 35;
     const pickedColors = colors;
     const group = draw.group();
     const lines = draw.group();
     const path = getRandomArrayVal([...blobs, ...wackyBlobs]);
     colors = ['#fff'];
-    const mask = wonkyCircle(canvasWidth, 0, 0, path, false);
+    const mask = wonkyCircle(settings.canvasWidth, 0, 0, path, false);
     colors = pickedColors;
-    randomlyRotate = false;
-    rotationAngle = getRandomInt(0, 360);
-    drawShapes(rowSize, [line], shape => {
-      rotationAngle += 5.2;
+    settings.randomlyRotate = false;
+    settings.rotationAngle = getRandomInt(0, 360);
+    drawShapes(settings.rowSize, [line], shape => {
+      settings.rotationAngle += 5.2;
       lines.add(shape);
     });
     group.add(lines);
@@ -425,48 +466,34 @@ const processes = {
 }
 
 const drawShapes = (rowSize, shapes, callback) => {
-  let size = canvasWidth/rowSize;
-  const amt = (canvasWidth / size) * (canvasHeight / size);
-  let newsize = size * scale;
+  let size = settings.canvasWidth/rowSize;
+  const amt = (settings.canvasWidth / size) * (settings.canvasHeight / size);
+  let newsize = size * settings.scale;
   // let offset = scale;
 
   for(let i = 0; i < amt; i++) {
-    let x = (i * size) % canvasWidth;
-    let y = Math.floor((i * size) / canvasWidth) * size;
+    let x = (i * size) % settings.canvasWidth;
+    let y = Math.floor((i * size) / settings.canvasWidth) * size;
 
-    x = x + size/2 - newsize/2;
-    y = y + size/2 - newsize/2;
+    x = Math.round(x + size/2 - newsize/2);
+    y = Math.round(y + size/2 - newsize/2);
 
-    if(rollDicePct(density)) {
+    if(rollDicePct(settings.density)) {
       const s = shapes || getActiveShapes();
       const shape = getRandomArrayVal(s)(newsize, x, y);
       if(callback) {
-        callback(shape);
+        callback(shape, x, y);
       }
     }
   }
 }
-
-// const drawSpecific = (rowSize) => {
-//   const size = canvasWidth/rowSize;
-//   const amt = (canvasWidth / size) * (canvasHeight / size);
-//
-//   for(let i = 0; i < amt; i++) {
-//     const x = (i * size) % canvasWidth;
-//     const y = Math.floor((i * size) / canvasWidth) * size;
-//
-//     if(rollDicePct(density)) {
-//       getRandomArrayVal(getActiveShapes())(size, x, y);
-//     }
-//   }
-// }
 
 const renderColorOptions = () => {
 
   colors.forEach((color, index) => {
     $('.colors').appendChild($html(`
       <div class="color-option">
-        <input class="color" type="checkbox" data-color="${color}" ${$if(index < 4, 'checked')}>
+        <input class="color" type="checkbox" data-color="${color}" ${$if(settings.colors.includes(color), 'checked')}>
         <label style="background-color: ${color}">
           <img src="assets/check.svg">
         </label>
@@ -475,20 +502,31 @@ const renderColorOptions = () => {
   });
 }
 
+const initSettings = () => {
+  $('canvasWidthInput').value = settings.canvasWidth;
+  $('canvasHeightInput').value = settings.canvasHeight;
+  $('elementSizeInput').value = settings.rowSize;
+  $('rotationAngleInput').value = settings.rotationAngle;
+  $('densityInput').value = settings.density;
+  $('strokeWidthInput').value = settings.strokeWidth;
+  $('fillAsGradient').checked = settings.fillAsGradient;
+  $('scaleInput').value = settings.scale;
+}
+
 const generate = () => {
   colors = [...document.querySelectorAll('input.color:checked')].map(color => color.getAttribute('data-color'));
-  canvasWidth = $('canvasWidthInput').value;
-  canvasHeight = $('canvasHeightInput').value;
-  rowSize = +$('elementSizeInput').value;
-  rotationAngle = +$('rotationAngleInput').value;
-  density = +$('densityInput').value;
-  strokeWidth = +$('strokeWidthInput').value;
-  fillAsGradient = $('fillAsGradient').checked;
-  scale = $('scaleInput').value/100;
+  settings.canvasWidth = $('canvasWidthInput').value;
+  settings.canvasHeight = $('canvasHeightInput').value;
+  settings.rowSize = +$('elementSizeInput').value;
+  settings.rotationAngle = +$('rotationAngleInput').value;
+  settings.density = +$('densityInput').value;
+  settings.strokeWidth = +$('strokeWidthInput').value;
+  settings.fillAsGradient = $('fillAsGradient').checked;
+  settings.scale = $('scaleInput').value/100;
 
   $('copy').innerText = 'Copy to clipboard';
 
-  draw.size(canvasWidth, canvasHeight)
+  draw.size(settings.canvasWidth, settings.canvasHeight)
 
   if($('autoClearCanvas').checked) {
     draw.clear();
@@ -497,9 +535,9 @@ const generate = () => {
   if($('selectProcess').value !== 'none') {
     processes[$('selectProcess').value]();
   } else {
-    drawShapes(rowSize);
+    drawShapes(settings.rowSize);
   }
-  randomlyRotate = true;
+  settings.randomlyRotate = true;
 }
 
 const bindStaticEvents = () => {
@@ -516,8 +554,8 @@ const bindStaticEvents = () => {
 
   $('download').onclick = () => {
     const canvas = document.createElement('canvas');
-    canvas.width = canvasWidth * 2;
-    canvas.height = canvasHeight * 2;
+    canvas.width = settings.canvasWidth * 2;
+    canvas.height = settings.canvasHeight * 2;
     document.body.appendChild(canvas);
     const ctx = canvas.getContext('2d');
     const image = new Image();
@@ -548,5 +586,6 @@ const bindStaticEvents = () => {
 document.addEventListener('DOMContentLoaded', () => {
   renderColorOptions();
   bindStaticEvents();
+  initSettings();
   generate();
 })
