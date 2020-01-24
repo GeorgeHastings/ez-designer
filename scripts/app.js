@@ -493,11 +493,7 @@ const renderColorOptions = () => {
   colors.forEach((color, index) => {
     $('.colors').appendChild($html(`
       <div class="color-option">
-<<<<<<< HEAD
-        <input class="color" type="checkbox" data-color="${color}" ${$if(settings.colors.includes(color), 'checked')}>
-=======
         <input class="color" type="checkbox" id=${'color-' + index} name=${'color-' + index} data-color="${color}">
->>>>>>> c232a4c9bcd82447b36ae51a2e35bdcfaaa4edb2
         <label style="background-color: ${color}">
           <img src="assets/check.svg">
         </label>
@@ -618,10 +614,6 @@ const bindStaticEvents = () => {
 document.addEventListener('DOMContentLoaded', () => {
   renderColorOptions();
   bindStaticEvents();
-<<<<<<< HEAD
-  initSettings();
-=======
   loadFromQueryParams();
->>>>>>> c232a4c9bcd82447b36ae51a2e35bdcfaaa4edb2
   generate();
 })
