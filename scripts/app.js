@@ -493,7 +493,11 @@ const renderColorOptions = () => {
   colors.forEach((color, index) => {
     $('.colors').appendChild($html(`
       <div class="color-option">
+<<<<<<< HEAD
         <input class="color" type="checkbox" data-color="${color}" ${$if(settings.colors.includes(color), 'checked')}>
+=======
+        <input class="color" type="checkbox" id=${'color-' + index} name=${'color-' + index} data-color="${color}">
+>>>>>>> c232a4c9bcd82447b36ae51a2e35bdcfaaa4edb2
         <label style="background-color: ${color}">
           <img src="assets/check.svg">
         </label>
@@ -524,6 +528,14 @@ const generate = () => {
   settings.fillAsGradient = $('fillAsGradient').checked;
   settings.scale = $('scaleInput').value/100;
 
+  const serialized = new URLSearchParams(new FormData(document.querySelector("#controls-form"))).toString();
+
+  if (window.location.href.split("?")[1] !== serialized) {
+    const gemName = "Gem " + Math.floor(Math.random() * 10000);
+    document.querySelector('title').innerText = gemName;
+    window.history.pushState({}, gemName, "?" + serialized);
+  }
+
   $('copy').innerText = 'Copy to clipboard';
 
   draw.size(settings.canvasWidth, settings.canvasHeight)
@@ -538,6 +550,26 @@ const generate = () => {
     drawShapes(settings.rowSize);
   }
   settings.randomlyRotate = true;
+}
+
+const loadFromQueryParams = () => {
+  const searchParams = (new URL(document.location)).searchParams;
+
+  if (searchParams.toString().length == 0) {
+    $("#color-0").checked = true;
+    $("#color-1").checked = true;
+    $("#color-2").checked = true;
+    $("#color-3").checked = true;
+    $("#shapeTriangle").checked = true;
+  }
+
+  searchParams.forEach((value, key) => {
+    if (value === "on") {
+      $("#" + key).checked = true;
+    } else {
+      $("#" + key).value = value;
+    }
+  });
 }
 
 const bindStaticEvents = () => {
@@ -586,6 +618,10 @@ const bindStaticEvents = () => {
 document.addEventListener('DOMContentLoaded', () => {
   renderColorOptions();
   bindStaticEvents();
+<<<<<<< HEAD
   initSettings();
+=======
+  loadFromQueryParams();
+>>>>>>> c232a4c9bcd82447b36ae51a2e35bdcfaaa4edb2
   generate();
 })
